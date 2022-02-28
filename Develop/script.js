@@ -1,4 +1,7 @@
-// Assignment code here
+var generateBtn = document.querySelector("#generate");
+var passwordEl = document.querySelector("#password"); 
+
+
 
 var askPasswordCase = function() {
   var promptCase = window.prompt('Would you like only lowercase letters, only uppercase letters, or both? Type "lower", "upper", or "both".');
@@ -13,10 +16,11 @@ var askPasswordCase = function() {
   if (promptCase === "lower") {
     passwordCase = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
     chooseNumber();
+  }
 
   if (promptCase === "upper") {
     passwordCase =["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-    chooseNumber(); 
+    chooseNumber();
   }
 
   if (promptCase === "both") {
@@ -26,6 +30,7 @@ var askPasswordCase = function() {
 };
 
 function chooseNumber() {
+
   var passwordLength = window.prompt("How many characters do you want your password to be? Choose a number between 8 and 128.");
   
   if (passwordLength === "" || passwordLength === null) {
@@ -44,7 +49,6 @@ function chooseNumber() {
   }
 
   else (passwordLength >= 8 && passwordLength <= 128); {
-  
     combinedArray();
     function combinedArray() {
       newArray = [].concat(specialChar, passwordCase);
@@ -70,23 +74,51 @@ function chooseNumber() {
         function writePassword() {
           var password = (chooseRandom(newArray, passwordLength));
           var passwordText = document.querySelector("#password");
-          passwordText.value = password.join(""); //.join("") removes commas bw array
+          passwordText.value = password.join(""); 
         }
     };
   };
 };
 
-// Get references to the #generate element
-var generateBtn = document.querySelector("#generate");
+generateBtn.addEventListener("click", specialOrReg);
+  function specialOrReg() {
+    var promptCharacters = window.prompt("Do you want your password to include special characters?");
+    
+    if (promptCharacters === "" || promptCharacters === null) {
+      window.alert("Please provide a valid answer.");
+      return specialOrReg();
+    }
 
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
+    promptCharacters = promptCharacters.toLowerCase();
 
-  passwordText.value = password;
+    if (promptCharacters === "no") {
+      specialChar = [""];
+      askNumbers();
+    }
+  
+    if (promptCharacters === "yes") {
+      specialChar = ['!', '”', '#', '$', '%', '&', '(', ')', '*', '+', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~' ];
+      askNumbers();
+    }
+  };
 
-}
+  function askNumbers() {
+    var promptNumbers = window.prompt("Do you want your password to include numbers?");
+    
+    if (promptNumbers === "" || promptNumbers === null) {
+      window.alert("Please provide a valid answer.");
+      return askNumbers();
+    }
 
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+    promptNumbers = promptNumbers.toLowerCase();
+
+    if (promptNumbers === "no") {
+      numericChar = [""];
+      askPasswordCase();
+    }
+  
+    if (promptNumbers === "yes") {
+      numericChar = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+      askPasswordCase();
+    }
+  };
