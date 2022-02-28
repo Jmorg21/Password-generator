@@ -25,6 +25,57 @@ var askPasswordCase = function() {
   }
 };
 
+function chooseNumber() {
+  var passwordLength = window.prompt("How many characters do you want your password to be? Choose a number between 8 and 128.");
+  
+  if (passwordLength === "" || passwordLength === null) {
+    window.alert("Please choose a number between 8 and 128.");
+    return chooseNumber();
+  } 
+
+  else if (passwordLength < 8) {
+    window.alert("Please choose a number higher than 8.");
+    return chooseNumber();
+  }
+  
+  else if (passwordLength > 128) {
+    window.alert("Please choose a number lower than 128.");
+    return chooseNumber();
+  }
+
+  else (passwordLength >= 8 && passwordLength <= 128); {
+  
+    combinedArray();
+    function combinedArray() {
+      newArray = [].concat(specialChar, passwordCase);
+    }
+
+    generatePassword();
+    function generatePassword() {
+      const newArray = [].concat(specialChar, numericChar, passwordCase);
+      const chooseRandom = (newArray, num = 1) => {
+        const res = [];
+        for(let i = 0; i < num; ){
+          const random = Math.floor(Math.random() * newArray.length);
+          if(res.indexOf(newArray[random]) !== -1){
+              continue;
+          };
+          res.push(newArray[random]);
+          i++;
+        };
+        return res;
+      };
+
+        writePassword();
+        function writePassword() {
+          var password = (chooseRandom(newArray, passwordLength));
+          var passwordText = document.querySelector("#password");
+          passwordText.value = password.join(""); //.join("") removes commas bw array
+        }
+    };
+  };
+};
+
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
