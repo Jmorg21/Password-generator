@@ -1,8 +1,8 @@
 var generateBtn = document.querySelector("#generate");
-var passwordEl = document.querySelector("#password"); 
+var passwordEl = document.querySelector("#password"); //finished password
 
 
-
+//case prompt
 var askPasswordCase = function() {
   var promptCase = window.prompt('Would you like only lowercase letters, only uppercase letters, or both? Type "lower", "upper", or "both".');
 
@@ -29,6 +29,52 @@ var askPasswordCase = function() {
   }
 };
 
+//special characters prompt
+generateBtn.addEventListener("click", specialOrReg);
+  function specialOrReg() {
+    var promptCharacters = window.prompt("Do you want your password to include special characters?");
+    
+    if (promptCharacters === "" || promptCharacters === null) {
+      window.alert("Please provide a valid answer.");
+      return specialOrReg();
+    }
+
+    promptCharacters = promptCharacters.toLowerCase();
+
+    if (promptCharacters === "no") {
+      specialChar = [""];
+      askNumbers();
+    }
+  
+    if (promptCharacters === "yes") {
+      specialChar = ['!', '”', '#', '$', '%', '&', '(', ')', '*', '+', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~' ];
+      askNumbers();
+    }
+  };
+
+  //numbers prompt
+  function askNumbers() {
+    var promptNumbers = window.prompt("Do you want your password to include numbers?");
+    
+    if (promptNumbers === "" || promptNumbers === null) {
+      window.alert("Please provide a valid answer.");
+      return askNumbers();
+    }
+
+    promptNumbers = promptNumbers.toLowerCase();
+
+    if (promptNumbers === "no") {
+      numericChar = [""];
+      askPasswordCase();
+    }
+  
+    if (promptNumbers === "yes") {
+      numericChar = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+      askPasswordCase();
+    }
+  };
+
+  //number of characters prompt
 function chooseNumber() {
 
   var passwordLength = window.prompt("How many characters do you want your password to be? Choose a number between 8 and 128.");
@@ -54,6 +100,7 @@ function chooseNumber() {
       newArray = [].concat(specialChar, passwordCase);
     }
 
+    //function to generate the password
     generatePassword();
     function generatePassword() {
       const newArray = [].concat(specialChar, numericChar, passwordCase);
@@ -70,6 +117,7 @@ function chooseNumber() {
         return res;
       };
 
+        //add generated password to page
         writePassword();
         function writePassword() {
           var password = (chooseRandom(newArray, passwordLength));
@@ -79,46 +127,3 @@ function chooseNumber() {
     };
   };
 };
-
-generateBtn.addEventListener("click", specialOrReg);
-  function specialOrReg() {
-    var promptCharacters = window.prompt("Do you want your password to include special characters?");
-    
-    if (promptCharacters === "" || promptCharacters === null) {
-      window.alert("Please provide a valid answer.");
-      return specialOrReg();
-    }
-
-    promptCharacters = promptCharacters.toLowerCase();
-
-    if (promptCharacters === "no") {
-      specialChar = [""];
-      askNumbers();
-    }
-  
-    if (promptCharacters === "yes") {
-      specialChar = ['!', '”', '#', '$', '%', '&', '(', ')', '*', '+', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', ']', '^', '_', '{', '}', '|', '~' ];
-      askNumbers();
-    }
-  };
-
-  function askNumbers() {
-    var promptNumbers = window.prompt("Do you want your password to include numbers?");
-    
-    if (promptNumbers === "" || promptNumbers === null) {
-      window.alert("Please provide a valid answer.");
-      return askNumbers();
-    }
-
-    promptNumbers = promptNumbers.toLowerCase();
-
-    if (promptNumbers === "no") {
-      numericChar = [""];
-      askPasswordCase();
-    }
-  
-    if (promptNumbers === "yes") {
-      numericChar = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-      askPasswordCase();
-    }
-  };
